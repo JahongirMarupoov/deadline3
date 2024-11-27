@@ -1,171 +1,131 @@
-import 'package:custom_radio_group_list/custom_radio_group_list.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const CalculatorApp());
 }
 
-List<SampleData> sampleList = [];
+class CalculatorApp extends StatelessWidget {
+  const CalculatorApp({Key? key}) : super(key: key);
 
-List<String> stringList = [
-  'test1',
-  'test2',
-  'test3',
-  'test4',
-  'test5',
-];
-List<String> hLisItem = [
-  'Delhi',
-  'Mumbai',
-];
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: ' Radio Group List Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Radio Group List Demo'),
+      debugShowCheckedModeBanner: false,
+      home: CalculatorScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class CalculatorScreen extends StatelessWidget {
+  CalculatorScreen({Key? key}) : super(key: key);
 
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  String? selectedItem;
-  SampleData? selectedItemNew;
-  String? hSelectedItem;
-  @override
-  void initState() {
-    super.initState();
-    sampleList.add(SampleData(title: 'Mumbai', id: '1'));
-    sampleList.add(SampleData(title: 'Delhi', id: '2'));
-    sampleList.add(SampleData(title: 'Bhopal', id: '3'));
-    sampleList.add(SampleData(title: 'Bangalore', id: '4'));
-    sampleList.add(SampleData(title: 'Indore', id: '5'));
-
-    selectedItem = stringList.first;
-    selectedItemNew = sampleList.first;
-  }
+  final List<String> buttons = [
+    'C', '', '', '/',
+    '7', '8', '9', 'x',
+    '4', '5', '6', '-',
+    '1', '2', '3', '+',
+    '0', '', '', '='
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('Object List Selection'),
-              RadioGroup(
-                  items: sampleList,
-                  selectedItem: selectedItemNew,
-                  onChanged: (value) {
-                    selectedItemNew = value;
-                    final snackBar = SnackBar(content: Text("$value"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
-                  labelBuilder: (ctx, index) {
-                    return Row(
-                      children: [
-                        Text(
-                          'Id : ${sampleList[index].id}',
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'City : ${sampleList[index].title}',
-                        ),
-                      ],
-                    );
-                  },
-                  shrinkWrap: true,
-                  disabled: false),
-              const Text('String List Selection'),
-              RadioGroup(
-                items: stringList,
-                onChanged: (value) {
-                  print('Value : $value');
-                  selectedItem = value;
-                  final snackBar = SnackBar(content: Text("$value"));
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                },
-                selectedItem: selectedItem,
-                shrinkWrap: true,
-                fillColor: Colors.green,
-                labelBuilder: (ctx, index) {
-                  return Text(
-                    stringList[index],
-                    style: TextStyle(
-                        color: selectedItem == stringList[index]
-                            ? Colors.green
-                            : Colors.black),
-                  );
-                },
+      backgroundColor: Colors.grey[300],
+      body: Column(
+        children: [
+          // Natija ekrani
+          Expanded(
+            flex: 1,
+            child: Container(
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.all(20),
+              color: Colors.grey[400],
+              child: const Text(
+                '0',
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
               ),
-              const Text('Horizontal List Disabled'),
-              SizedBox(
-                height: 30,
-                child: RadioGroup(
-                  items: hLisItem,
-                  disabled: true,
-                  scrollDirection: Axis.horizontal,
-                  onChanged: (value) {
-                    print('Value : $value');
-                    hSelectedItem = value;
-                    final snackBar = SnackBar(content: Text("$value"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
-                  selectedItem: hSelectedItem,
-                  shrinkWrap: true,
-                  labelBuilder: (ctx, index) {
-                    return Text(
-                      hLisItem[index],
-                    );
-                  },
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+          // Tugmalar
+          Expanded(
+            flex: 3,
+            child: GridView.builder(
+              padding: const EdgeInsets.all(10),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemCount: buttons.length,
+              itemBuilder: (context, index) {
+                // "C" tugmasi: ikki ustun egallaydi
+                if (buttons[index] == 'C') {
+                  return GridTile(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        // Make the "C" button span two columns
+                        fixedSize: const Size(180, 70),
+                      ),
+                      child: const Text(
+                        'C',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  );
+                }
+                // "0" tugmasi: ikki ustun egallaydi
+                else if (buttons[index] == '0') {
+                  return GridTile(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: const Text(
+                        '0',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  );
+                }
+                // Bo'sh joylarni tashlab ketamiz
+                else if (buttons[index].isEmpty) {
+                  return const SizedBox.shrink();
+                }
+                // Oddiy tugmalar
+                else {
+                  return ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttons[index] == '='
+                          ? Colors.green
+                          : Colors.grey,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    child: Text(
+                      buttons[index],
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  );
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
-  }
-}
-
-class SampleData {
-  String id;
-  String title;
-
-  SampleData({required this.id, required this.title});
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['title'] = title;
-    return data;
-  }
-
-  @override
-  String toString() {
-    return toJson().toString();
   }
 }
