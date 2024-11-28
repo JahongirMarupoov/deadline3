@@ -20,11 +20,9 @@ class CalculatorScreen extends StatelessWidget {
   CalculatorScreen({Key? key}) : super(key: key);
 
   final List<String> buttons = [
-    'C', '', '', '/',
     '7', '8', '9', 'x',
     '4', '5', '6', '-',
     '1', '2', '3', '+',
-    '0', '', '', '='
   ];
 
   @override
@@ -46,7 +44,56 @@ class CalculatorScreen extends StatelessWidget {
               ),
             ),
           ),
-          // Tugmalar
+          const SizedBox(height: 10),
+          // "C" tugmasi uchun maxsus qator
+          Row(
+            children: [
+              const SizedBox(width: 10),
+              Expanded(
+                flex: 3, // "C" tugmasi uch ustun egallaydi
+                child: Container(
+                  height: 100,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    child: const Text(
+                      'C',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10), // Tugmalar orasida bo'sh joy
+              Expanded(
+                flex: 1, // "/" tugmasi uchun bitta ustun
+                child: Container(
+                  height: 100,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    child: const Text(
+                      '/',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+            ],
+          ),
+          // Qolgan tugmalar GridView ichida
           Expanded(
             flex: 3,
             child: GridView.builder(
@@ -58,72 +105,80 @@ class CalculatorScreen extends StatelessWidget {
               ),
               itemCount: buttons.length,
               itemBuilder: (context, index) {
-                // "C" tugmasi: ikki ustun egallaydi
-                if (buttons[index] == 'C') {
-                  return GridTile(
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        // Make the "C" button span two columns
-                        fixedSize: const Size(180, 70),
-                      ),
-                      child: const Text(
-                        'C',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                  );
-                }
-                // "0" tugmasi: ikki ustun egallaydi
-                else if (buttons[index] == '0') {
-                  return GridTile(
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: const Text(
-                        '0',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                  );
-                }
                 // Bo'sh joylarni tashlab ketamiz
-                else if (buttons[index].isEmpty) {
+                if (buttons[index].isEmpty) {
                   return const SizedBox.shrink();
                 }
                 // Oddiy tugmalar
-                else {
-                  return ElevatedButton(
+                return ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: buttons[index] == '='
+                        ? Colors.green
+                        : Colors.grey,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  child: Text(
+                    buttons[index],
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                );
+              },
+            ),
+          ),
+          // "0" tugmasi uchun maxsus qator (GridView tagida joylashgan)
+          Row(
+            children: [
+              const SizedBox(width: 10),
+              Expanded(
+                flex: 3, // "0" tugmasi uch ustun egallaydi
+                child: Container(
+                  height: 100,
+                  child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: buttons[index] == '='
-                          ? Colors.green
-                          : Colors.grey,
+                      backgroundColor: Colors.grey,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                    child: Text(
-                      buttons[index],
-                      style: const TextStyle(fontSize: 20),
+                    child: const Text(
+                      '0',
+                      style: TextStyle(fontSize: 20),
                     ),
-                  );
-                }
-              },
-            ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10), // Tugmalar orasida bo'sh joy
+              Expanded(
+                flex: 1, // "=" tugmasi uchun bitta ustun
+                child: Container(
+                  height: 100,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    child: const Text(
+                      '=',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+            ],
+
           ),
+          const SizedBox(height: 300),
         ],
       ),
     );
