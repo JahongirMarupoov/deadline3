@@ -46,52 +46,55 @@ class CalculatorScreen extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           // "C" tugmasi uchun maxsus qator
-          Row(
-            children: [
-              const SizedBox(width: 10),
-              Expanded(
-                flex: 3, // "C" tugmasi uch ustun egallaydi
-                child: Container(
-                  height: 100,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+            child: Row(
+              children: [
+                //const SizedBox(width: 10),
+                Expanded(
+                  flex: 80, // "C" tugmasi uch ustun egallaydi
+                  child: Container(
+                    height: 100,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
                       ),
-                    ),
-                    child: const Text(
-                      'C',
-                      style: TextStyle(fontSize: 20),
+                      child: const Text(
+                        'C',
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 10), // Tugmalar orasida bo'sh joy
-              Expanded(
-                flex: 1, // "/" tugmasi uchun bitta ustun
-                child: Container(
-                  height: 100,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
+                const SizedBox(width: 10), // Tugmalar orasida bo'sh joy
+                Expanded(
+                  flex: 25, // "/" tugmasi uchun bitta ustun
+                  child: Container(
+                    height: 100,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
                       ),
-                    ),
-                    child: const Text(
-                      '/',
-                      style: TextStyle(fontSize: 20),
+                      child: const Text(
+                        '/',
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 10),
-            ],
+                //const SizedBox(width: 10),
+              ],
+            ),
           ),
           // Qolgan tugmalar GridView ichida
           Expanded(
@@ -134,7 +137,7 @@ class CalculatorScreen extends StatelessWidget {
             children: [
               const SizedBox(width: 10),
               Expanded(
-                flex: 3, // "0" tugmasi uch ustun egallaydi
+                flex: 80, // "0" tugmasi uch ustun egallaydi
                 child: Container(
                   height: 100,
                   child: ElevatedButton(
@@ -155,7 +158,7 @@ class CalculatorScreen extends StatelessWidget {
               ),
               const SizedBox(width: 10), // Tugmalar orasida bo'sh joy
               Expanded(
-                flex: 1, // "=" tugmasi uchun bitta ustun
+                flex: 25, // "=" tugmasi uchun bitta ustun
                 child: Container(
                   height: 100,
                   child: ElevatedButton(
